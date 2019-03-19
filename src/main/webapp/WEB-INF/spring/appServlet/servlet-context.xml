@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!--
+		<단순 페이지 이동인 경우>
+		
+		
+		/* 비번찾기 폼 */ 
+		@RequestMapping(value="/pwd_find.nhn")
+		public String pwd_find() {
+			return "member/pwd_find";
+		}
+		컨트롤러 클래스는 특별히 처리할 것이 없어 단순히 뷰 이름만 리턴하도록 구현한 경우 아래와 같이 작성하면 됩니다.
+		<mvc:view-controller>
+		
+	 -->
+	 <view-controller path="/main" view-name="main" />
+	 <view-controller path="/admin_dealer_main" view-name="yang/dealer_admin_login" />
+	 <view-controller view-name="lee/car_find" path="/car_find.bo"/>
+	<view-controller view-name="lee/cal_list" path="/cal_list_load.cal"/>
+	 
+	 
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="jsp/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.naver.project" />
+	
+	
+	
+</beans:beans>

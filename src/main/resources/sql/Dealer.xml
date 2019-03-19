@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="Dealer">
+
+	<!-- 딜러, 관리자 로그인 체크 -->
+	<select id = "dealer_admin_check" parameterType = "String" resultType = "dealer">
+		select * from dealer
+		where dealer_id = #{id}
+	</select>
+	
+	<!-- 관리자 페이지 - 딜러 수 -->
+	<select id="dealer_count" resultType = "int">
+		select count(store_no) from dealer
+	</select>
+	
+	<!-- 관리자 페이지 - 딜러 리스트 -->
+	<select id = "dealer_list" parameterType = "int" resultType = "dealer">
+		<![CDATA[
+   			  select * from 
+				   (select rownum rnum, dealer_id,
+				   			         dealer_name, dealer_phone, dealer_email,
+				   			         dealer.store_no, store_name 
+				   from dealer, store   		  
+				   where dealer.store_no = store.store_no
+				   order by store_no asc)
+				   where rnum >= ((#{page}-1) * 7 + 1)
+				   and rnum <= (#{page} * 7)
+   			 ]]>
+	</select>
+	
+	<!-- 관리자 페이지 - 딜러 지점 리스트 -->
+	<select id="name_list" resultType="store">
+		select store_name, store.store_no from store
+	</select>
+	
+	<!-- 관리자 페이지 - 딜러 수정 -->
+	<update id="dealer_edit" parameterType = "dealer">
+		update dealer
+		set
+			dealer_name = #{dealer_name},
+			dealer_phone = #{dealer_phone},
+			dealer_email = #{dealer_email},
+			store_no = #{store_no}
+		where
+			dealer_id = #{dealer_id}
+	</update>
+	
+	<!-- 관리자 페이지 - 딜러 등록 -->
+	<insert id = "dealer_reg" parameterType = "dealer">
+		insert into dealer
+		(dealer_id, dealer_pass, dealer_name, dealer_phone, dealer_email, store_no)
+		values
+		(#{dealer_id}, #{dealer_pass}, #{dealer_name}, #{dealer_phone}, #{dealer_email}, #{store_no})
+	</insert>
+	
+	<!-- 관리자 페이지 - 딜러 삭제 -->
+	<delete id="dealer_del" parameterType = "String">
+		delete from dealer
+		where dealer_id = #{dealer_id}
+	</delete> 
+	
+	<!-- 딜러 페이지 - 차량 목록 -->
+	<select id="dealer_car_manage" parameterType="int" resultType="car">
+		<![CDATA[
+		select * from (select rownum rnum, car_no, car_class, car_model, car_old, car_price from car)
+		where rnum >= ((#{page}-1)*7+1) and rnum <= (#{page}* 7)
+		]]>
+	</select>
+	
+	<!-- 총 게시물 수 -->
+	<select id="list_count" resultType="int">
+		select count(*) from car
+	</select>
+	
+	<!-- 딜러 페이지 - 차량 상세보기 -->
+	<select id="car_detail" parameterType="String" resultType="car">
+		select * from car where car_no = #{car_no}
+	</select>
+	
+	<!-- 딜러 페이지 - 차량 삭제 -->
+	<delete id="delete_car" parameterType = "String">
+		delete from car
+		where car_no = #{car_no}
+	</delete> 
+</mapper>

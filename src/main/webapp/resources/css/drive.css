@@ -1,0 +1,353 @@
+#select_wrap{
+	display: table;
+    background: rgba(255,255,255,0.6);
+    width: 100%;
+    margin:20px auto 35px;
+    border-radius: 5px;
+}
+#select_wrap li{
+    float: left;
+    padding: 11px 0;
+}
+#select_wrap li:nth-child(1),
+#select_wrap li:nth-child(2){
+	width:21%;
+}
+#select_wrap li:nth-child(3){
+	width:39%;
+}
+#select_wrap li:nth-child(4){
+	width:19%;
+}
+#select_wrap li label{
+	width:50px;
+	display: inline-block;
+}
+#select_wrap li select {
+    width: 150px;
+    border: none;
+    background: none;
+    border-bottom: 1px solid #000;
+    height: 34px;
+}
+#select_wrap #searchbtn{
+    width: 185px;
+    height: 34px;
+    border: none;
+    color: #fff;
+    background: #2d416d;
+}
+
+#list_wrap{
+	display:table;
+	width:100%;
+	height:564px;
+}
+#driveformli1{
+    width: 45%;
+    float: left;
+    display:table;
+}
+#select_car{
+	height:564px;
+	border-radius:10px;
+    background: rgba(0,0,0,0.1);
+    vertical-align: middle;
+    display: table-cell;
+    width: 100%;
+}
+#select_car h3{
+	
+}
+#drivelist_wrap h4{
+	margin-bottom:13px;
+}
+#driveformli1 hr{
+    margin-bottom: 0;
+    border: 0.5px solid #adb2bb;
+}
+#drivelist_wrap #drivelist{
+	width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    height:530px;	 /* important */
+    font-size: 15px;
+    overflow:hidden;
+}
+#drivelist_wrap #drivelist li{
+	padding: 13px 0 13px 15px;
+    border-bottom: 1px solid #adb2bb;
+}
+#drivelist_wrap #drivelist li a div:last-child{
+	margin-top:3px;
+	color: #666e7f;
+}
+#drivelist_wrap .dealerinfo{
+	display:none;
+}
+#drivelist_wrap .choice{
+	display: block;
+    margin: 10px 0 5px;
+    color: #424650;
+    font-size:15px;
+}
+#drivelist_wrap .dealerinfo div{
+    display: inline-block;
+    text-align: center;
+}
+#drivelist_wrap .dealerinfo span{
+	content: '';
+    width: 1px;
+    height: 13px;
+    background: #666e7f;
+    display: inline-block;
+}
+#drivelist_wrap .dealerinfo #info_box{
+    background: #2d416d;
+    color: #ffefee;
+    padding: 3px 9px;
+    font-weight: 300;
+    font-size: 14px;
+}
+#drivelist_wrap .dealerinfo div:not(#info_box){
+	padding: 0 15px;
+}
+
+
+#driveformli2{
+    float: right;
+    width: 50%;
+    display: table;
+}
+#select_calendar{
+	height:453px;
+	border-radius:10px;
+	background:rgba(0,0,0,0.1);
+    vertical-align: middle;
+    display: table-cell;
+    width: 100%;	
+}
+#driveformli2 h4{
+	margin-bottom:13px;
+}
+#driveformli2 .move-month{
+    background: #ef4f69;
+    border-radius: 10px 10px 0 0;
+    padding:10px 0;
+}
+#driveformli2 .move-month #preMonth {
+	float:left;
+	left:52px;
+	cursor:pointer;
+}
+#driveformli2 .move-month #currentMonth{
+	width: 25%;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    display:inline-block;
+}
+#driveformli2 .move-month #nextMonth {
+	float:right;
+	right:52px;
+	cursor:pointer;
+}
+#driveformli2 #table_wrap{
+    background: #fff;
+    padding-bottom:25px;
+    border-radius: 0 0 10px 10px;
+}
+#driveformli2 #table_wrap > table{
+    border-collapse: collapse;
+    width: 90%;
+    margin: 0 auto;
+}	
+#driveformli2 #table_wrap > table > thead{
+    color: #ef4f69;
+    line-height:35px;
+    font-size:14px;
+}
+#driveformli2 #table_wrap > table > thead > tr > th{
+	font-weight:500;
+}
+#driveformli2 #table_wrap table > tbody > tr> td {
+	border:1px solid #bbb;
+    padding-bottom: 2px;
+}
+#driveformli2 #table_wrap table > tbody > tr> td > div{
+	top: -3px;
+}
+#driveformli2 #table_wrap table > tbody > tr> td li{
+	height:21px;
+}
+#driveformli2  #table_wrap table > tbody > tr> td > span{
+    text-align: right;
+    width: 83%;
+    display: inline-block;
+    font-size:14px;
+}
+
+#driveformli3{
+    width: 50%;
+    display: table;
+    float: right;
+    margin-top:40px;
+    display: table;
+}
+#select_privacy{
+	height:69px;
+	border-radius:10px;
+	background:rgba(0,0,0,0.1);
+	vertical-align: middle;
+    display: table-cell;
+    width: 100%;
+}
+#driveformli3 h4{
+    margin: 20px 0;
+}
+#driveformli3 div:not(#select_privacy){
+	text-align:left;
+}
+#driveformli3 div label{
+    width: 65px;
+    display: inline-block;
+    letter-spacing: -1px;
+}
+#driveformli3 div input{
+    width: 70px;
+    padding: 3px;
+}
+#driveformli3 #privacy_wrap li:not(#drivebtn_wrap){
+	width:70%;
+	float:left;
+   	height: 40px;
+}
+#driveformli3 #privacy_wrap #drivebtn_wrap{
+    width: 30%;
+    height: 69px;
+    display: inline-block;
+}
+#driveformli3 #privacy_wrap #drivebtn_wrap input{
+    width: 100%;
+    height: -webkit-fill-available;
+    border: none;
+    background: #2d416d;
+    color: #fff;
+}
+
+.label--radio {
+  position: relative;
+  cursor: pointer;
+  font-size: 13px;
+  color:#797979;
+}
+.label--radio input[type="radio"]:disabled:after{
+    border: none;
+    background: #e4e4e4;
+    width: 13px;
+    height: 13px;
+}
+.radio {
+  position: relative;
+  cursor: pointer;
+  margin-right: 3px;
+}
+.label--radio span{
+	position: relative;
+    top: -2px;
+}
+.radio:before {
+  -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+  -moz-transition: -moz-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+  transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+  -webkit-transform: scale(0, 0);
+  -moz-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  -o-transform: scale(0, 0);
+  transform: scale(0, 0);
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  z-index: 1;
+  width: 9px;
+  height: 9px;
+  background: #ef4f69;
+/*   border-radius: 50%; */
+}
+.radio:checked:before {
+  -webkit-transform: scale(1, 1);
+  -moz-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  -o-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+.radio:after {
+  content: "";
+  position: absolute;
+  top: 0px;
+/*   left: -0.125rem; */
+  width: 11px;
+  height: 11px;
+  background: #fff;
+  border: 1px solid #ddd;
+/*   border-radius: 50%; */
+}
+
+#afterdrive {
+	display: none;
+}
+
+#godrive{
+    background: #2d416d;
+    border: none;
+    color: #fff;
+    padding: 15px 60px;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+#afterdrive h2{
+
+}
+#afterdrive #driveinfo{
+    width: 95%;
+    margin: 50px auto;
+    display: table;
+    text-align: center;
+}
+#afterdrive #driveinfo div{
+    width: 29%;
+    background: #ffffff;
+    float: left;
+    border-radius: 10px;
+    height: 334px;		/* important */
+    box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.05);
+}
+#afterdrive #driveinfo div:nth-child(2){
+	margin:0 6.5%;
+}
+#afterdrive #driveinfo div span{
+    background: #2d416d;
+    width: 130px;
+    display: inline-block;
+    padding: 20px 0;
+    border-radius: 38px;
+    position: relative;
+    top: 54px;
+    z-index: 99;
+    color: #fff;
+}
+#afterdrive #driveinfo div .driveinfo_innerul{
+    position: relative;
+    background: #d4d4d4;
+    padding: 75px 0;		/* important */
+    height: 100px;			/* important */
+    top: 20px;
+    border-radius: 0 0 10px 10px;
+    color: #000;
+}
+#afterdrive #driveinfo div .driveinfo_innerul li{
+    margin: 7px auto;
+    width: 75%;
+}

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- namespace는 sql/*.xml파일 이름과 맞춰주세요. -->
+<mapper namespace="Board">
+
+<!-- 리스트 총 개수 -->
+<select id="list_Count" resultType="int">
+	select count(board_num)
+	from board
+</select>
+
+<!-- 리스트 총 개수 : 딜러 -->
+<select id="list_count_dealer" parameterType="String" resultType="int">
+	select count(board_num)
+	from board
+	where car_no IN (select car_no
+					 from car
+					 where dealer_id = #{id})
+</select>
+
+<!-- 로드 할 페이지의 게시글 리스트 -->
+<select id="list_page" parameterType="int" resultType="board">
+	select *
+	from (
+			select rownum rnum, board_num, board_name,
+					board_subject, board_content,
+					board_re_ref,board_re_lev,board_re_seq,
+					board_readcount,to_date(to_char(board_date,'YYYY/MM/DD'),'YYYY/MM/DD') as board_date
+			from (select * from board order by board_re_ref desc, board_re_seq asc)
+		  )
+	<![CDATA[
+	where   rnum >= ((#{page}-1) * 6 + 1)
+	and		rnum <= (#{page} * 6)
+	]]>
+</select>
+
+
+<!-- 게시글 등록 -->
+<insert id="insert_board" parameterType="board">
+	insert into board
+		(board_num,board_name,board_pass,board_subject,
+		 board_content,board_file,
+		 board_re_ref,board_re_lev,board_re_seq,board_readcount,board_date,
+		 board_original,dealer_id,car_no)
+	values
+		(board_num_seq.nextval,#{board_name},#{board_pass}, #{board_subject},
+		 #{board_content},#{board_file,jdbcType=VARCHAR},
+		 board_num_seq.nextval, 0, 0, 0, sysdate,
+		 #{board_original, jdbcType=VARCHAR},#{dealer_id},#{car_no}
+		 )
+</insert>
+
+
+<!-- 검색 : 검색 결과 개수 -->
+<select id="search_count" parameterType="java.util.Map" resultType="int">
+	select count(board_num)
+	from board
+	<where>
+		<if test="search_option == ''">
+		</if>
+		<if test="search_option == 'board_name'">
+			board_name like #{search_keyword}
+		</if>
+		<if test="search_option == 'board_subject'">
+			board_subject like #{search_keyword}
+		</if>
+		<if test="search_option == 'board_content'">
+			board_content like #{search_keyword}
+		</if>
+	</where>
+</select>
+
+<!-- 검색 : 결과 게시글 리스트 -->
+<select id="search_list" parameterType="java.util.Map" resultType="board">
+	select *
+	from (
+			select rownum rnum, board_num, board_name,
+					board_subject, board_content,
+					board_re_ref,board_re_lev,board_re_seq,
+					board_readcount,to_date(to_char(board_date,'YYYY/MM/DD'),'YYYY/MM/DD') as board_date
+			from (select * from board
+					<where>
+						<if test="search_option == ''">
+						</if>
+						<if test="search_option == 'board_name'">
+							board_name like #{search_keyword}
+						</if>
+						<if test="search_option == 'board_subject'">
+							board_subject like #{search_keyword}
+						</if>
+						<if test="search_option == 'board_content'">
+							board_content like #{search_keyword}
+						</if>
+					</where>
+				  order by board_re_ref desc, board_re_seq asc)
+		  )
+	<![CDATA[
+	where   rnum >= ((#{page}-1) * 6 + 1)
+	and		rnum <= (#{page} * 6)
+	]]>
+</select>
+
+
+<!-- 게시글 상세 정보 -->
+<select id="select_board" parameterType="int" resultType="board">
+	select *
+	from board
+	where board_num=#{num}
+</select>
+
+
+<!-- 조회수 증가 -->
+<update id="board_hit" parameterType="int">
+	update board
+	set board_readcount = board_readcount+1
+	where board_num=#{num}
+</update>
+
+
+<!-- 답변글 레벨 증가 -->
+<update id="board_level" parameterType="board">
+	update board
+	set board_re_seq = board_re_seq+1
+	where board_re_ref = #{board_re_ref}
+	and board_re_seq > #{board_re_seq}
+</update>
+
+
+<!-- 답변 등록 -->
+<insert id="insert_reply" parameterType="board">
+	insert into board
+		(board_num, board_name, board_pass, board_subject,
+		 board_content, board_file,
+		 board_re_ref, board_re_lev, board_re_seq, board_readcount, board_date,
+		 board_original,dealer_id,car_no)
+	values
+		(board_num_seq.nextval, #{board_name}, #{board_pass}, #{board_subject},
+		 #{board_content}, #{board_file,jdbcType=VARCHAR},
+		 #{board_re_ref}, #{board_re_lev}+1, #{board_re_seq}+1, 0, sysdate,
+		 #{board_original, jdbcType=VARCHAR},#{dealer_id},#{car_no}
+		 )
+</insert>
+
+
+<!-- 게시글 수정 -->
+<update id="boad_modity">
+	update board
+	set	board_name=#{board_name},
+		board_subject=#{board_subject},
+		board_content=#{board_content},
+		board_file=#{board_file},
+		board_original=#{board_original},
+		car_no=#{car_no}
+	where board_num = #{board_num}
+</update>
+
+
+<!-- 클래스,차량,차량번호에 해당하는 리스트 -->
+<select id="car_list" parameterType="java.util.Map" resultType="car">
+	select *
+	from car
+	<where>
+	<if test="car_class != ''">
+		car_class like #{car_class}
+	</if>
+	<if test="car_model != ''">
+		and car_model like #{car_model}
+	</if>
+	<if test="car_no != ''">
+		and car_no like #{car_no}
+	</if>
+	</where>
+</select>
+
+
+<!-- 게시글 작성 딜러 정보 -->
+<select id="dealer_detail" parameterType="String" resultType="dealer">
+	select dealer_name,dealer_pass
+	from dealer
+	where dealer_id=#{dealer_id}
+</select>
+
+<!-- 게시글 상세보기 - 게시글과 관련있는 글 리스트 -->
+<select id="board_re_list" parameterType="int" resultType="board">
+	select *
+	from board
+	where board_re_ref = #{board_re_ref}
+</select>
+
+
+<!-- 게시글 삭제 -->
+<delete id="board_delete" parameterType="int">
+	delete board
+	where board_num=#{board_num}
+</delete>
+
+
+<!-- 딜러 게시글관리 기준 : 로드 할 페이지의 게시글 리스트 -->
+<select id="board_list_dealer" parameterType="java.util.Map" resultType="board">
+	select *
+	from (
+			select rownum rnum, board_num, board_name,
+					board_subject, board_content,
+					board_re_ref,board_re_lev,board_re_seq,
+					board_readcount,to_date(to_char(board_date,'YYYY/MM/DD'),'YYYY/MM/DD') as board_date,
+					car_no
+			from (select * from board 
+			      where car_no IN (select car_no
+						from car where dealer_id=#{id})
+			      order by board_re_ref desc, board_re_seq asc)
+			
+		  )
+	<![CDATA[
+	where   rnum >= ((#{page}-1) * 7 + 1)
+	and		rnum <= (#{page} * 7)
+	]]>
+</select>
+
+<!-- 관리자 게시글관리 기준 : 로드할 페이지의 게시글 리스트 -->
+<select id="board_list_admin" parameterType="java.util.Map" resultType="board">
+	select *
+	from (
+			select rownum rnum, board_num, board_name,
+					board_subject, board_content,
+					board_re_ref,board_re_lev,board_re_seq, car_no,
+					board_readcount,to_date(to_char(board_date,'YYYY/MM/DD'),'YYYY/MM/DD') as board_date
+			from (select * from board 
+					<where>
+						<if test='type!=null and type.equals("all")'>
+						</if>
+						<if test='type!=null and type.equals("q")'>
+							board_re_lev = 0
+						</if>
+						<if test='type!=null and type.equals("a")'>
+							board_re_lev != 0
+						</if>
+					</where>
+				  order by board_re_ref desc, board_re_seq asc)
+		  )
+	<![CDATA[
+	where   rnum >= ((#{page}-1) * 7 + 1)
+	and		rnum <= (#{page} * 7)
+	]]>
+</select>
+
+</mapper>

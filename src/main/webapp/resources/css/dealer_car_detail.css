@@ -1,0 +1,43 @@
+.list_category table{
+	margin-bottom:30px;
+}
+.list_category  table tr td:nth-child(2n-1){
+    padding: 17px 0;
+    width: 15%;
+    border:1px solid #cfe6ed;
+    background: #9ec0ca;
+    color: #333;
+    font-size: 15px;
+}
+.list_category  table tr td:nth-child(2n){
+	width: 35%;
+    padding: 0;
+    border: 1px solid #9ec0ca;
+    background: rgba(255,255,255,.2);
+}
+.list_category  table tr th{
+	border:none;
+	border-top: 2px solid #2b2b2b;
+    border-bottom: 2px solid #2b2b2b;
+	padding: 17px 0;
+}
+.list_category  table tr td img{
+	width:90%;
+}
+#car_edit_delete_area{
+    position: absolute;
+    top: 0;
+    right: 120px;
+}
+#car_edit_delete_area button{
+	padding: 9px 40px;
+    color:#fff;
+    display: inline-block;
+  	border:none;
+  	background:#565656;
+}
+#car_edit_delete_area button:hover{
+	color:#9ec0ca;
+	background:#2b2b2b;
+	transition:all 0.2s ease-in;
+}

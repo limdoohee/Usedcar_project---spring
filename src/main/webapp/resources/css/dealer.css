@@ -1,0 +1,112 @@
+@CHARSET "UTF-8";
+
+	#store_color, #dealer_color{
+	
+			background: #04FAF6;
+			text-align: center;
+			height:200px;
+			color: white;
+			font-size: 18px;
+		}
+		
+	#store_font, #dealer_font{
+			padding: 20px; 
+		    width: 50%;
+		    height: 50%;
+		    overflow: auto;
+		    margin: auto;
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    bottom: 0;
+		    right: 0;
+	}
+	
+	.tbn {
+		width: 100%;
+		height: 200px;
+		text-align : center;
+	}
+	.tbn select{
+		width: 212px; 
+		  height: 43px; 
+		  -webkit-border-radius: 0px 4px 4px 0px/5px 5px 4px 4px; 
+		  -moz-border-radius: 0px 4px 4px 0px/0px 0px 4px 4px; 
+		  border-radius: 0px 4px 4px 0px/5px 5px 4px 4px; 
+		  background-color: #fff; 
+		  -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
+		  -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
+		  box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
+		  border: solid 1px #cbc9c9;
+		  margin-left: -5px;
+		  margin-top: 13px; 
+		  padding-left: 10px;
+	}
+	input[type=text],input[type=password],input[type=email]{
+		  width: 200px; 
+		  height: 39px; 
+		  -webkit-border-radius: 0px 4px 4px 0px/5px 5px 4px 4px; 
+		  -moz-border-radius: 0px 4px 4px 0px/0px 0px 4px 4px; 
+		  border-radius: 0px 4px 4px 0px/5px 5px 4px 4px; 
+		  background-color: #fff; 
+		  -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
+		  -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
+		  box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
+		  border: solid 1px #cbc9c9;
+		  margin-left: -5px;
+		  margin-top: 13px; 
+		  padding-left: 10px;
+		}
+		
+		.icon {
+		  display: inline-block;
+		  width: 30px;
+		  background-color: #3a57af;
+		  margin-left: 15px;
+		  -webkit-border-radius: 4px 0px 0px 4px; 
+		  -moz-border-radius: 4px 0px 0px 4px; 
+		  border-radius: 4px 0px 0px 4px;
+		  color: white;
+		  -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+		  -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
+		  box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
+		  border: solid 0px #cbc9c9;
+		  padding: 8px 15px 8px 15px;
+		}
+		
+		#on{
+		
+			text-align:center;
+			padding : 8px 0 0 0;
+			margin : 10px 0 0 0; 
+			
+		}
+		
+		.form-group{
+		
+			text-align: center;
+			padding: 8px 0 0 0;
+			margin: 10px 0 0 0;
+		}
+			
+		.form-group input {
+			outline: none;
+			background: #4285F4;
+			width: 270px;
+			border: 0;
+			border-radius: 4px;
+			padding: 12px 20px;
+			color: #FFFFFF;
+			font-family: inherit;
+			font-size: inherit;
+			font-weight: 500;
+			line-height: inherit;
+			text-transform: uppercase;
+			cursor: pointer;
+			margin: 0 0 0 10px;
+		}
+		
+		.list_category  table tr td{
+			border:none;
+	    	padding: 0;
+		}

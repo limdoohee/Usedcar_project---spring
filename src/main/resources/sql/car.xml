@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 sql/*.xml파일 이름과 맞춰주세요. -->
+<mapper namespace="Car" >	
+	<!-- 차량 클래스 -->
+	<select id="car_class"  resultType="car"> 
+		select distinct car_class from car
+		order by car_class
+	</select>
+	
+	<!-- 차량 모델 -->
+	<select id="car_model" parameterType="String" resultType="car">
+		select distinct car_model from car
+		where car_class = #{car_class}
+		order by car_model
+	</select>
+	
+	<!-- 전체 검색 -->
+	<select id="car_alllist" resultType="car">
+		select car.*, grade.grade from car, grade
+		where car.car_score between grade.rowscore and grade.hiscore
+						order by car.car_score desc
+	</select>
+	
+	<!-- 상세 보기 -->
+	<select id="car_detail" parameterType="String" resultType="car">
+		select * from car
+		where car_no = #{car_no}
+	</select>
+	
+	<!-- 딜러 정보 -->
+	<select id="dealer_info" parameterType="String" resultType="dealer">
+		select * from dealer
+		where dealer_id = #{dealer_id}
+	</select>
+	
+	<!-- 차량 검색 -->
+	<select id="car_list" parameterType="car" resultType="car">
+		select car.*, grade.grade from car, grade
+		<where>
+			<if test ="car_class != 'hide'">					car_class = #{car_class}					</if>
+			<if test ="car_model != 'hide'">		and car_model = #{car_model}				</if>
+			<if test ="car_engine != 'hide'">		
+				<if test="car_engine == '이상없음'">	and	car_engine = '이상없음' </if>
+				<if test="car_engine == '점검필요'">	and	car_engine = '점검필요' </if>
+			</if>
+			<if test ="car_accident != 'hide'"> 
+				<if test="car_accident == '무사고'">		and car_accident = '무사고'	</if>
+				<if test="car_accident == '유사고'">		and car_accident not in('무사고')</if>
+			</if>
+			<if test ="car_old != 'hide'">
+				<if test="car_old == '출고 - 3년'"> and car_old between to_char(sysdate, 'yyyy')-2 and to_char(sysdate, 'yyyy')</if>
+				<if test="car_old == '3년 - 5년'"> and car_old between to_char(sysdate, 'yyyy')-5 and to_char(sysdate, 'yyyy')-3</if>
+				<if test="car_old == '6년 -'"> <![CDATA[and car_old <= to_char(sysdate, 'yyyy')-6]]></if>
+			</if>
+			<if test ="car_distance != 'hide'">
+				<if test="car_distance == '0 - 30,000'">	<![CDATA[and car_distance <= 30000]]></if>
+				<if test="car_distance == '30,000 - 50,000'">	and car_distance between 30001 and 50000	</if>
+				<if test="car_distance == '50,000 - 80,000'">	and car_distance between 50000 and 80000	</if>
+				<if test="car_distance == '100,000 -'">	<![CDATA[and car_distance >= 100000]]>	</if>
+			</if>
+			<if test ="car_condition != 'hide'">
+				<if test="car_condition == '도로'">and car_condition = '도로'</if>
+				<if test="car_condition == '시내'">and car_condition = '시내'</if>
+				<if test="car_condition == '산악'">and car_condition = '산악'</if>
+			</if>
+			<if test ="car_change != 'hide'">				
+				<if test="car_change == '교체 완료'"> and car_change = '교체 완료'	</if>
+				<if test="car_change == '교체 미완료'"> and car_change not in('교체 완료')	</if>
+			</if>
+			<if test ="car_fault != 'hide'">						
+				<if test="car_fault == '결함 없음'">	and car_fault = '결함 없음'	</if>
+				<if test="car_fault == '결함 있음'">	and car_fault not in('결함 없음')</if>
+			</if>
+			<if test ="car_fuel != 'hide'">						
+				<if test="car_fuel == '휘발유'">	and car_fuel = '휘발유'</if>
+				<if test="car_fuel == '경유'">	and car_fuel = '경유'</if>
+				<if test="car_fuel == '하이브리드'">	and car_fuel = '하이브리드'</if>
+			</if>
+			<if test ="car_color != 'hide'">					
+				<if test="car_color == '인기 색상'">and car_color in('검은색','흰색','쥐색')</if>
+				<if test="car_color == '이외'">and car_color not in('검은색','흰색','쥐색')</if>
+			</if>
+			<if test ="car_option != 'hide'">			
+				<if test="car_option == '있음'">and car_option not in('없음')</if>
+				<if test="car_option == '없음'">and car_option = '없음'</if>
+			</if>
+		</where>
+			and car.car_score between grade.rowscore and grade.hiscore
+					order by car.car_score desc
+	</select>
+	
+	
+	<!-- 실구매 계산기 - 선택한 '클래스'에 해당하는 차량 목록 -->
+<select id="car_list2" resultType="car" parameterType="java.util.Map">
+	select * from car
+	<where>
+		<choose>
+			<when test="car_class == 'All'">
+			</when>
+			<otherwise>
+				car_class like #{car_class}
+			</otherwise>
+		</choose>
+	</where>
+</select>
+
+<!-- 실구매 계산기 - 선택한 '필터'에 해당하는 차량 목록 -->
+<select id="car_list_filter" resultType="car" parameterType="java.util.Map">
+	<![CDATA[
+	select * from car
+	where ((car_price-(car_price*#{filter1}))/#{filter2}) <= #{filter3}
+	]]>
+</select>
+
+<!-- 허위매물검색&실구매계산기  : 클래스 목록 -->
+<select id="car_class2" resultType="car">
+	select distinct car_class
+	from car
+</select>
+
+
+<!-- 허위매물검색 : 클래스에 해당하는 모델 목록 -->
+<select id="car_model2" resultType="car" parameterType="String">
+	select distinct car_model
+	from car
+	where car_class=#{car_class}
+</select>
+
+
+<!-- 판매등록 저장 -->
+	<insert id="car_insert" parameterType="car">
+		insert into car
+		(car_no, car_price,car_class,car_model,
+		car_engine,car_accident,car_old,car_distance,
+		car_condition,car_change,car_fault,car_fuel,car_cc,car_color,
+		car_option,car_score,car_image,dealer_id)
+	values(#{temp_car_no},#{car_price},#{temp_class},#{temp_model},
+		#{car_engine},#{temp_accident},#{temp_year},#{temp_distance},
+		#{car_condition},#{car_change},#{car_fault},#{car_fuel},#{car_cc},#{car_color},
+		#{car_option},#{car_score},#{car_image},#{dealer_id})	
+		
+	</insert>
+	
+	<!-- 판매등록 확인리스트 -->
+	<select id="confirmList2" resultType="car">
+		select * from car
+	</select>
+  
+  
+  	<select id="car_cont" parameterType="String" resultType="car">
+  	select 
+  	*
+  	from car
+  	where car_no=#{car_no}
+  	</select>
+  	
+  	<delete id="deleteCar" parameterType="String">
+   delete from car where car_no=#{car_no}
+   </delete> 
+   
+   <update id="editCar" parameterType="car">
+   update car
+   set
+   		car_price=#{car_price},
+   		car_engine=#{car_engine},
+   		car_condition=#{car_condition},
+   		car_change=#{car_change},
+   		car_fault=#{car_fault},
+   		car_fuel=#{car_fuel},
+   		car_cc=#{car_cc},
+   		car_color=#{car_color},
+   		car_option=#{car_option},
+   		car_image=#{car_image},
+   		car_score=#{car_score}
+   		
+   </update>
+   
+   
+   <select id="select_car" resultType="car" parameterType="String">
+   	select *
+   	from car
+   	where car_no=#{car_no}
+   </select>
+   
+</mapper>

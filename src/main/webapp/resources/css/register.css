@@ -1,0 +1,72 @@
+#register_title{
+    color: #a08871;
+    font-size: 30px;
+    font-weight: 400;
+    margin-bottom: 25px;
+}
+#register_form h4{
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: -1px;
+    padding: 9px 0;
+    background: #c1d7d8;
+    border-radius: 5px 5px 0 0;
+}
+.register_table_wrap {
+    width: 100%;
+    background: rgba(255,255,255,0.8);
+    margin-bottom: 40px;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0px 5px 12px 2px rgba(0,0,0,0.05);
+}
+.register_table_wrap #car_info_register,
+.register_table_wrap #registrant_info{
+    width: 70%;
+    margin: 0 auto;
+ 	padding: 30px 0;
+}
+.register_table_wrap #car_info_register tr,
+.register_table_wrap #registrant_info tr{
+    height: 45px;
+}
+.register_table_wrap #car_info_register th,
+.register_table_wrap #registrant_info th{
+	text-align: left;
+    width: 13%;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+}
+.register_table_wrap #car_info_register td,
+.register_table_wrap #registrant_info td{
+	width:37%;
+    text-align: left;
+}
+.register_table_wrap #car_info_register td input[type=text],
+.register_table_wrap #registrant_info td input[type=text]{
+	color:#a08871;
+    border: none;
+    background: none;
+    border-bottom: 1px solid #bbb;
+    cursor: text;
+    padding: 5px 0;
+    font-size: 14px;
+}
+.register_table_wrap #car_info_register td label{
+	cursor:pointer;
+}
+.register_table_wrap #registrant_info td select{
+	background:none;
+	border:none;
+	border-bottom: 1px solid #bbb;
+    padding-bottom: 4px;
+    color: #737373;
+    width: 80px;
+    margin-right: 10px;
+}
+#register_form #register_submit {
+    border: none;
+    background: #a08871;
+    color: #fff;
+    padding: 10px 30px;
+    font-size: 15px;
+}

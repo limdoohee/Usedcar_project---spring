@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings> 
+	
+	<typeAliases>
+		<!-- 
+			★ 아래의 주석처럼 model을 table이름과 동일하게 alias 붙여서 세팅해주세요.
+			
+				예) <typeAlias type="com.naver.project.model.CarBean" alias="car" />
+									=====bean경로=====================    =====테이블명====
+				
+		 -->
+		<!-- <typeAlias type="com.naver.myhome7.model.MemberBean" alias="member" />
+		<typeAlias type="com.naver.myhome7.model.ZipcodeBean2" alias="Zipcode" /> -->
+		
+		<typeAlias type="com.naver.project.model.CarBean" alias="car"/>
+		<typeAlias type="com.naver.project.model.Car_tempBean" alias="car_temp"/>
+		<typeAlias type="com.naver.project.model.StoreBean" alias="store"/>
+		<typeAlias type="com.naver.project.model.DriveBean" alias="drive"/>
+		<typeAlias type="com.naver.project.model.DealerBean" alias="dealer"/>
+		<typeAlias type="com.naver.project.model.Test_dateBean" alias="testdate"/>
+		<typeAlias type="com.naver.project.model.DriveListResultBean" alias="drivelist"/>
+		<typeAlias type="com.naver.project.model.BoardBean" alias="board"/>
+	</typeAliases>
+
+</configuration>

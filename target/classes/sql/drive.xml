@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- namespace는 sql/*.xml파일 이름과 맞춰주세요. -->
+<mapper namespace="Drive">
+
+	<select id="searchCarClass" resultType="car">
+		select	distinct car_class
+		from	car
+		order	by car_class
+	</select>
+	
+	<select id="searchCarModel" parameterType="String" resultType="car">
+		select	distinct car_model
+		from	car
+		where	car_class = #{car_class}
+	</select>
+	
+	<select id="searchStoreLoc1" parameterType="java.util.Map" resultType="store">
+		select	distinct
+				substr(st.store_location, 1, instr(st.store_location, ' ')-1)
+								as	store_location
+		from	store				st
+		join	dealer				dl
+		on		dl.store_no			=		st.store_no
+		join	car					cr
+		on		cr.dealer_id		=		dl.dealer_id
+		where	cr.car_class		=		#{car_class}
+		<if test="car_model != ''">
+		and		cr.car_model		=		#{car_model}
+		</if>
+	</select>
+	
+	<select id="searchStoreLoc2" parameterType="java.util.Map" resultType="store">
+		select	distinct
+				substr(st.store_location, instr(st.store_location, ' ')+1
+						, instr(st.store_location, ' ', 1, 2) - instr(st.store_location, ' '))
+									as		store_location
+		from	store				st
+		join	dealer				dl
+		on		dl.store_no			=		st.store_no
+		join	car					cr
+		on		cr.dealer_id		=		dl.dealer_id
+		where	cr.car_class		=		#{car_class}
+		<if test="car_model != ''">
+		and		cr.car_model		=		#{car_model}
+		</if>
+		and		st.store_location	like	#{store_loc1}
+	</select>
+	
+	<select id="getDriveListCount" parameterType="java.util.Map" resultType="int">
+		select	count(*)
+		from	car					cr
+		join	dealer				dl
+		on		dl.dealer_id		=		cr.dealer_id
+		join	store				st
+		on		st.store_no			=		dl.store_no
+		<where>
+		 	<if test="car_class != ''">
+		 		cr.car_class		=		#{car_class}
+		 	</if>
+		 	<if test="car_model != ''">
+		 and	cr.car_model		=		#{car_model}
+		 	</if>
+		 	<if test="store_loc1 != ''">
+		 and	st.store_location	like	#{store_loc1}
+		 	</if>
+		 	<if test="store_loc2 != ''">
+		 and	st.store_location	like	#{store_loc2}
+		 	</if>
+		</where>
+	</select>
+		
+	<select id="selectDrivelist" parameterType="java.util.Map" resultType="drivelist">
+		select	*
+		from	(
+				select	rownum				rnum
+					,	cr.car_class
+					,	cr.car_model
+					,	cr.car_no
+					,	cr.dealer_id
+					,	st.store_name
+					,	st.store_location
+					,	dl.dealer_name
+					,	dl.dealer_phone
+					,	dl.dealer_email
+				from	car					cr
+				join	dealer				dl
+				on		dl.dealer_id		=		cr.dealer_id
+				join	store				st
+				on		st.store_no			=		dl.store_no
+				<where>
+				 	<if test="car_class != ''">
+				 		cr.car_class		=		#{car_class}
+				 	</if>
+				 	<if test="car_model != ''">
+				 and	cr.car_model		=		#{car_model}
+				 	</if>
+				 	<if test="store_loc1 != ''">
+				 and	st.store_location	like	#{store_loc1}
+				 	</if>
+				 	<if test="store_loc2 != ''">
+				 and	st.store_location	like	#{store_loc2}
+				 	</if>
+				</where>
+				)
+		<![CDATA[
+		where   rnum	>=		((#{page}-1) * 6 + 1)
+		and		rnum	<=		(#{page} * 6)
+		]]>
+	</select>
+	
+	<select id="getDealerInfo" parameterType="String" resultType="drivelist">
+		select	dl.dealer_name
+			,	dl.dealer_phone
+			,	dl.dealer_email
+			,	(	select	store_name
+					from	store
+					where	store_no	=	dl.store_no
+				)					store_name
+		from	dealer				dl
+		where	dealer_id			=		#{dealer_id}
+	</select>
+	
+	<select id="getDrivedate" parameterType="String" resultType="testdate">
+		select	decode(date_ampm, '오전', 'am', 'pm')
+											date_ampm
+			,	to_char(date_date, 'dd')	date_date	
+		from	test_date
+		where	car_no				=		#{car_no}
+	</select>
+	
+	<select id="getCarInfo" parameterType="String" resultType="car">
+		select	*
+		from	car
+		where	car_no		=	#{car_no}
+	</select>
+	
+	<insert id="insertDriveInfo" parameterType="java.util.Map">
+		insert	into	drive
+		values	(
+				drive_seq.nextval,
+				#{car_no}, #{car_class}, #{car_model},
+				#{dealer_id}, #{drive_date}, decode(#{drive_ampm}, 'am', '오전', '오후'),
+				#{drive_name}, #{drive_phone}, 0
+				)
+	</insert>
+	
+	<select id="getStoreNo" parameterType="String" resultType="dealer">
+		select	store_no
+		from	dealer
+		where	dealer_id	=	#{dealer_id}
+	</select>
+	
+	<insert id="insertTestDate" parameterType="java.util.Map">
+		insert	into	test_date
+		values	(
+				testdate_seq.nextval,
+				#{drive_date}, decode(#{drive_ampm}, 'am', '오전', '오후'),
+				1, #{store_no}, #{car_no}
+				)
+	</insert>
+	
+	<select id="getDriveSuccessInfo" parameterType="java.util.Map" resultType="drivelist">
+		select	cr.car_class
+			,	cr.car_model
+			,	dl.dealer_name
+			,	dl.dealer_phone
+			,	st.store_name
+			,	st.store_location
+			,	dr.drive_name
+			,	dr.drive_phone
+			,	to_char(dr.drive_date, 'yyyy-mm-dd')	drive_date
+			,	dr.drive_ampm
+		from	car					cr
+		join	dealer				dl
+		on		dl.dealer_id		=		cr.dealer_id
+		join	store				st
+		on		st.store_no			=		dl.store_no
+		join	drive				dr
+		on		dr.dealer_id		=		dl.dealer_id
+		where	dl.dealer_id		=		#{dealer_id}
+		and		dr.drive_date		=		#{drive_date}
+		and		dr.drive_ampm		=		decode(#{drive_ampm}, 'am', '오전', '오후')
+	</select>
+	
+	<!-- 딜러 페이지 -->
+	<select id="getDealerDriveListCount" parameterType="String" resultType="int">
+		select	count(*)
+		from	drive
+		<where>
+			<if test="car_class != ''">
+			and		drive_car_class		=		#{car_class}	
+			</if>
+			<if test="car_model != ''">
+			and		drive_car_model		=		#{car_model}
+			</if>
+			<if test="car_no != ''">
+			and		replace(drive_car_no, ' ', '')	like	replace(#{car_no}, ' ', '')
+			</if>
+		</where>
+<!-- 		where	dealer_id		=		#{dealer_id} -->
+	</select>
+	
+	<select id="selectDealerDrivelist" parameterType="java.util.Map" resultType="drive">
+		select	*
+		from	(
+				select	rownum	rnum
+					,	drive_no
+					,	drive_car_no
+					,	drive_car_class
+					,	drive_car_model
+					,	to_char(drive_date, 'yy-mm-dd')		drive_date
+					,	drive_ampm
+					,	drive_name
+					,	drive_phone
+					,	dealer_id
+					,	(	select	distinct dealer_name
+							from	dealer
+							where	dealer_id	=	dr.dealer_id
+						)									dealer_name
+					,	drive_complete
+				from	(select * from drive
+						 order by drive_date desc)			dr
+<!-- 		where	dealer_id		=		#{dealer_id} -->
+				<where>
+					<if test="car_class != ''">
+					and		drive_car_class		=		#{car_class}	
+					</if>
+					<if test="car_model != ''">
+					and		drive_car_model		=		#{car_model}
+					</if>
+					<if test="car_no != ''">
+					and		replace(drive_car_no, ' ', '')	like	replace(#{car_no}, ' ', '')
+					</if>
+				</where>
+				)
+		<![CDATA[
+		where   rnum	>=		((#{page}-1) * 7 + 1)
+		and		rnum	<=		(#{page} * 7)
+		]]>
+	</select>
+	
+	
+	<update id="updateDriveComplete" parameterType="int">
+		update	drive
+		set		drive_complete	=	1
+		where	drive_no		=	#{drive_no}
+	</update>
+</mapper>

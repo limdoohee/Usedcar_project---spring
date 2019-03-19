@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- namespace는 sql/*.xml파일 이름과 맞춰주세요. -->
+<mapper namespace="car_temp">
+	<!-- 판매등록 저장 -->
+	<insert id="temp_insert" parameterType="car_temp">
+		insert into car_temp
+		(temp_name,temp_location,temp_phone,
+		temp_car_no,temp_class,temp_model,temp_year,
+		temp_distance,temp_accident,dealer_id)
+	values(#{temp_name},#{temp_location},#{temp_phone},
+		#{temp_car_no},#{temp_class},#{temp_model},#{temp_year},
+		#{temp_distance},#{temp_accident},#{dealer_id})
+		
+	
+		
+	</insert>
+ 	
+ 	<!-- 등록한 차량 확인리스트-->
+	<select id="confirmList" parameterType="String"  resultType="car_temp">
+select
+ 	* 
+ from 
+ (select temp_class,temp_model,temp_year,temp_distance,
+ temp_accident,temp_car_no,temp_name,temp_location,
+ temp_phone,car_temp.dealer_id,dealer.dealer_name from dealer,
+ car_temp where car_temp.dealer_id=dealer.dealer_id)
+ where 
+ temp_car_no=#{temp_car_no}
+   
+	</select>
+	<!-- 차량중복 -->
+	<select id="checkTemp_car_no" parameterType="String" resultType="car_temp">
+		select * from car_temp
+		where temp_car_no=#{temp_car_no}
+	</select>
+	
+	<!-- 딜러id를 입력받아 딜러가 신청받은 목록보기 -->
+	<select id="getTemp_list" parameterType="String" resultType="car_temp">
+	select 
+	*
+	from
+	car_temp
+	where
+	dealer_id = #{dealer_id}
+	</select>
+	
+	<!-- 신청한 내역을 차량번호로 보기 -->
+	<select id="getCar_temp_one" parameterType="String" resultType="car_temp">
+	select
+	*
+	from
+	car_temp
+	where
+	temp_car_no = #{temp_car_no}
+	</select>
+	
+	<!-- temp에서 입력받은 location을 기준으로 가능한 dealer_id뽑기-->
+	<select id="temp_location" parameterType="car_temp" resultType="String">
+		select 
+			dealer_id
+		from 
+			dealer
+		 where store_no
+		 in(select store_no 
+		 			from 
+		 				store 
+		 			where 
+		 				store_location 
+		 			like 
+		 				'%' ||  #{temp_location} || '%')
+	
+	</select>
+	
+
+	<!-- <insert id="updateDealer_id"  parameterType="String">
+	insert into car_temp
+		(dealer_id)
+	values((#{dealer_id}) order by temp_no desc)where rownum=1
+
+	</insert> -->
+	
+	<delete id="deleteCar_temp" parameterType="String">
+	delete from car_temp where temp_car_no = #{car_no}
+	</delete>
+	
+	<select id="getCont2"  parameterType="String" resultType="car_temp">
+	select * from car_temp where temp_car_no = #{car_no}
+	</select>
+
+
+</mapper>

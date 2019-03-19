@@ -1,0 +1,84 @@
+	#content {
+		width: 920px;
+		text-align: center;
+		margin-left: 15px;
+	}
+	#header {
+		width: 100%;
+		heigth:100px;
+		text-align: left;
+		border-bottom: 1px solid lightgray;
+		margin-bottom: 20px;
+	}
+	#header h4 {
+		padding:20px;
+		padding-top: 30px;
+		padding-bottom: 30px;
+	}
+	#input_box {
+		height: 40px;
+		width: 100%;
+	}
+	.input {
+		height: 100%;
+		width: 30%;
+		margin: 0;
+		padding:0;
+		float: left;
+		border: 2px solid #00077F;
+	}
+	.button {
+		width:7%;
+		height:100%;
+		background-color: #00077F;
+		color: white;
+		border: 0px;
+	}
+	#search_wrap,#result_t {
+		width: 100%;
+	}
+	#result_t {
+		text-align:center;
+		font-weight: 300;
+		font-size: 10pt;
+		border-spacing: 0;
+	}
+	#result_t th {
+		font-weight: 300;
+		padding:5px;
+		border: 1px solid lightgray;
+	}
+	#result td {
+		border-bottom: 1px solid lightgray;
+	}
+	.car_img {
+		width: 150px;
+	}
+	.car_img img {
+		width: 100%;
+		height: 130px;
+	}
+	.car_cont {
+		width: 100px;
+		float: left;
+	}
+	.car_no {
+		width: 100px;
+	}
+	.car_btn {
+		width: 50px;
+	}
+	.car_content ul {
+		text-align: left;
+		float: left;
+		margin-left: 65px;
+	}
+	.button2 {
+		background-color: white;
+		border: 1px solid lightgray;
+	}
+	#result_keyword{
+		text-align: left;
+		font-weight: 300;
+		font-size: 10pt;
+	}
