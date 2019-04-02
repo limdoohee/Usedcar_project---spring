@@ -232,10 +232,10 @@ public class CarAction {
 							 
 						
 					}else {
-						
 						ModelAndView mv = new ModelAndView("main");
 						Car_tempBean.setTemp_location(temp_location+" "+temp_location2);
 						this.carservice.insertCarTemp(Car_tempBean);
+						
 						if(true) {
 					
 						
