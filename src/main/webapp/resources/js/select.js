@@ -53,7 +53,7 @@ function searchload(){
 	   var $car_class_list = $("#car_class .select-options li")
 		$car_class_list.click(function(){
 			var carclass = $(this).text();
-			// 모델 뽑아오는 ajax
+			//  뽑아오는 ajax
 			$.ajax({
 			    url : './selectCarmodel.drv',
 			    type : 'POST', 
