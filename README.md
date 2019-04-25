@@ -2,7 +2,7 @@ DB 오라클 사용으로 인해 URL로 드리지 못한 점 양해 부탁 드�
 해당 프로젝트의 전반적인 뷰단은 전적으로 제가 맡아했습니다.
 
 
-메인 - 차량 검색<br>
+차량 검색 페이지<br>
 https://github.com/limdoohee/Usedcar_project---spring/blob/master/src/main/webapp/jsp/lim/search.jsp
 
 차량 검색 리스트<br>
