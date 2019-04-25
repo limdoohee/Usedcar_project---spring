@@ -2,6 +2,8 @@ DB 오라클 사용으로 인해 URL로 드리지 못한 점 양해 부탁 드�
 해당 프로젝트의 전반적인 뷰단은 전적으로 제가 맡아했습니다.
 
 
+![used-car](https://user-images.githubusercontent.com/46707624/56728032-da79ab80-678c-11e9-8dfb-9da388dd0f75.jpg)
+
 차량 검색 페이지<br>
 https://github.com/limdoohee/Usedcar_project---spring/blob/master/src/main/webapp/jsp/lim/search.jsp
 
