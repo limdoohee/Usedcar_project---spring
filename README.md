@@ -13,14 +13,14 @@ https://github.com/limdoohee/Usedcar_project---spring/blob/master/src/main/webap
 차량 상세보기<br>
 https://github.com/limdoohee/Usedcar_project---spring/blob/master/src/main/webapp/jsp/lim/search_detail_list.jsp
 
+견적신청 페이지<br>
+https://github.com/limdoohee/Usedcar_project---spring/blob/master/src/main/webapp/jsp/sim/register.jsp
+
 시승신청 페이지<br>
 https://github.com/limdoohee/Usedcar_project---spring/blob/master/src/main/webapp/jsp/ha/drive.jsp
 
 지도 검색 페이지<br>
 https://github.com/limdoohee/Usedcar_project---spring/blob/master/src/main/webapp/jsp/yang/store_search.jsp
-
-견적신청 페이지<br>
-https://github.com/limdoohee/Usedcar_project---spring/blob/master/src/main/webapp/jsp/sim/register.jsp
 
 css 폴더<br>
 https://github.com/limdoohee/Usedcar_project---spring/tree/master/src/main/webapp/resources/css
