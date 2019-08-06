@@ -57,7 +57,7 @@ function searchload(){
 			$.ajax({
 			    url : './selectCarmodel.drv',
 			    type : 'POST', 
-			    cashe : false, 
+			    cache : false, 
 			    data : {"carclass" : carclass},
 			    success : function(rdata) {
 			    		var select = '<option value="hide">전체선택</option>' ;
